@@ -9,11 +9,11 @@ contract('DiaChain', (accounts) => {
   before(async() =>{
     this.owner = accounts[0];
 
-    this.VACCINE_BRANDS = {
-      Pfizer: "Pfizer-BioNTech",
-      Moderna: "Moderna",
-      Janssen: "Johnson & Johnson's Janssen",
-      Sputnik: "Sputnik V"
+    this.MINING_LOCATION = {
+      South_Africa: "South_Africa",
+      Australia: "Australia",
+      Congo: "Congo",
+      Namibia: "Namibia"
     };
     //enums
     this.ModeEnums = {
@@ -21,12 +21,12 @@ contract('DiaChain', (accounts) => {
       PROVER: {val: "PROVER",pos:1},
       VERIFIER: {val: "VERIFIER",pos:2}
     };
-    this.StatusEnums = { // MANUFACTURED, DELIVERING_INTERNATIONAL, STORED, DELIVERING_LOCAL, DELIVERED
-      manufactured: {val: "MANUFACTURED",pos:0},
-      delivering1: {val: "DELIVERING_INTERNATIONAL",pos:1},
-      stored: {val: "STORED",pos:2},
-      delivering2: {val: "DELIVERING_LOCAL",pos:3},
-      delivered: {val: "DELIVERED",pos:4}
+    this.StatusEnums = { // MINED, ROUGH_TRADE, POLISHED, POLISHED_TRADE, JEWELLER
+      mined: {val: "MINED",pos:0},
+      trade1: {val: "ROUGH_TRADE",pos:1},
+      polished: {val: "POLISHED",pos:2},
+      trade2: {val: "POLISHED_TRADE",pos:3},
+      jeweller: {val: "JEWELLER",pos:4}
     };
 
     this.defaultEntities = {
@@ -35,30 +35,30 @@ contract('DiaChain', (accounts) => {
       inspector: {id: accounts[3], mode: this.ModeEnums.ISSUER.val},
       distributorGlobal: {id: accounts[4], mode: this.ModeEnums.VERIFIER.val},
       distributorLocal: {id: accounts[5], mode: this.ModeEnums.VERIFIER.val},
-      immunizer: {id: accounts[6], mode: this.ModeEnums.ISSUER.val},
-      traveller: {id: accounts[7], mode: this.ModeEnums.PROVER.val},
+      polisher: {id: accounts[6], mode: this.ModeEnums.ISSUER.val},
+      customer: {id: accounts[7], mode: this.ModeEnums.PROVER.val},
       borderAgent: {id: accounts[8], mode: this.ModeEnums.VERIFIER.val}
 
     };
     this.defaultVaccineBatches = {
-      0: {brand: this.VACCINE_BRANDS.Pfizer, manufacturer: this.defaultEntities.manufacturerA.id},
-      1: {brand: this.VACCINE_BRANDS.Moderna, manufacturer: this.defaultEntities.manufacturerA.id},
-      2: {brand: this.VACCINE_BRANDS.Janssen, manufacturer: this.defaultEntities.manufacturerB.id},
-      3: {brand: this.VACCINE_BRANDS.Sputnik, manufacturer: this.defaultEntities.manufacturerB.id},
-      4: {brand: this.VACCINE_BRANDS.Pfizer, manufacturer: this.defaultEntities.manufacturerB.id},
-      5: {brand: this.VACCINE_BRANDS.Pfizer, manufacturer: this.defaultEntities.manufacturerA.id},
-      6: {brand: this.VACCINE_BRANDS.Moderna, manufacturer: this.defaultEntities.manufacturerA.id},
-      7: {brand: this.VACCINE_BRANDS.Moderna, manufacturer: this.defaultEntities.manufacturerB.id},
-      8: {brand: this.VACCINE_BRANDS.Sputnik, manufacturer: this.defaultEntities.manufacturerB.id},
-      9: {brand: this.VACCINE_BRANDS.Janssen, manufacturer: this.defaultEntities.manufacturerA.id},
+      0: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
+      1: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
+      2: {brand: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerB.id},
+      3: {brand: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
+      4: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerB.id},
+      5: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
+      6: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
+      7: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerB.id},
+      8: {brand: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
+      9: {brand: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerA.id},
     };
 
-    this.coldChainInstance = await DiaChain.deployed();
+    this.diaChainInstance = await DiaChain.deployed();
   });
   it('should add entities successfully', async () => {
     for(const entity in this.defaultEntities){
       const {id, mode} = this.defaultEntities[entity];
-      const result = await this.coldChainInstance.addEntity(
+      const result = await this.diaChainInstance.addEntity(
         id,
         mode,
         {from: this.owner}
@@ -69,7 +69,7 @@ contract('DiaChain', (accounts) => {
         entityMode: mode
 
       });
-      const retrievedEntity = await this.coldChainInstance.entities.call(id);
+      const retrievedEntity = await this.diaChainInstance.entities.call(id);
       assert.equal(id, retrievedEntity.id, "mismatched ids");
       assert.equal(this.ModeEnums[mode].pos, retrievedEntity.mode.toString(), "mismatched modes");
 
@@ -78,7 +78,7 @@ contract('DiaChain', (accounts) => {
   it('should add vaccine batched successfully', async () => {
     for(let i=0; i< Object.keys(this.defaultVaccineBatches).length; i++){
       const {brand, manufacturer} = this.defaultVaccineBatches[i];
-      const result = await this.coldChainInstance.addVaccineBatch(
+      const result = await this.diaChainInstance.addVaccineBatch(
         brand, manufacturer,
         {from: this.owner}
       );
@@ -88,7 +88,7 @@ contract('DiaChain', (accounts) => {
         manufacturer: manufacturer
 
       });
-      const retrievedVaccineBatch = await this.coldChainInstance.vaccineBatches.call(i);
+      const retrievedVaccineBatch = await this.diaChainInstance.vaccineBatches.call(i);
       assert.equal(i, retrievedVaccineBatch.id);
       assert.equal(brand, retrievedVaccineBatch.brand);
       assert.equal(manufacturer, retrievedVaccineBatch.manufacturer);
@@ -99,7 +99,7 @@ contract('DiaChain', (accounts) => {
 
   it('should sign a message and store as a certificate from issuer to the prover successfully', async () => {
       const mnemonic = "kiss display south atom basket tiger ethics trial expect hub clarify barrel";
-      const providerOrUrl = "http://localhost:8545";
+      const providerOrUrl = "http://127.0.0.1:8545";
       const provider = new HDWalletProvider({
         mnemonic,
         providerOrUrl
@@ -115,10 +115,10 @@ contract('DiaChain', (accounts) => {
         inspector.id
       );
 
-      const result = await this.coldChainInstance.issueCertificate(
+      const result = await this.diaChainInstance.issueCertificate(
         inspector.id,
         manufacturerA.id,
-        this.StatusEnums.manufactured.val,
+        this.StatusEnums.mined.val,
         vaccineBatchId,
         signature,
         {from: this.owner}

@@ -37,7 +37,7 @@ contract DiaChain {
         uint[] certificateIds;
     }
 
-    enum Status { MINING, ROUGH_EXPORT, ROUGH_TRADE, POLISHING, POLISHED_TRADE, JEWELLER }
+    enum Status { MINED, ROUGH_TRADE, POLISHED, POLISHED_TRADE, JEWELLER }
     
     struct Certificate {
         uint id;
@@ -129,30 +129,26 @@ contract DiaChain {
 
     function unmarshalStatus(string memory _status) private pure returns(Status status) {
         bytes32 encodedStatus = keccak256(abi.encodePacked(_status));
-        bytes32 encodedStatus0 = keccak256(abi.encodePacked("MINING"));
-        bytes32 encodedStatus1 = keccak256(abi.encodePacked("ROUGH_EXPORT"));
-        bytes32 encodedStatus2 = keccak256(abi.encodePacked("ROUGH_TRADE"));
-        bytes32 encodedStatus3 = keccak256(abi.encodePacked("POLISHING"));
-        bytes32 encodedStatus4 = keccak256(abi.encodePacked("POLISHED_TRADE"));
-        bytes32 encodedStatus5 = keccak256(abi.encodePacked("JEWELLER"));
+        bytes32 encodedStatus0 = keccak256(abi.encodePacked("MINED"));
+        bytes32 encodedStatus1 = keccak256(abi.encodePacked("ROUGH_TRADE"));
+        bytes32 encodedStatus2 = keccak256(abi.encodePacked("POLISHED"));
+        bytes32 encodedStatus3 = keccak256(abi.encodePacked("POLISHED_TRADE"));
+        bytes32 encodedStatus4 = keccak256(abi.encodePacked("JEWELLER"));
 
 
         if(encodedStatus == encodedStatus0) {
-            return Status.MINING;
+            return Status.MINED;
         }
         else if(encodedStatus == encodedStatus1) {
-            return Status.ROUGH_EXPORT;
-        }
-        else if(encodedStatus == encodedStatus2) {
             return Status.ROUGH_TRADE;
         }
-        else if(encodedStatus == encodedStatus3) {
-            return Status.POLISHING;
+        else if(encodedStatus == encodedStatus2) {
+            return Status.POLISHED;
         }
-        else if(encodedStatus == encodedStatus4) {
+        else if(encodedStatus == encodedStatus3) {
             return Status.POLISHED_TRADE;
         }
-        else if(encodedStatus == encodedStatus5) {
+        else if(encodedStatus == encodedStatus4) {
             return Status.JEWELLER;
         }
 
