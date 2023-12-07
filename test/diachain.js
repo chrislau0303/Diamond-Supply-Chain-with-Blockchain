@@ -2,7 +2,7 @@ const {expectEvent, BN} = require("@openzeppelin/test-helpers");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require('web3');
 
-const DiaChain = artifacts.require("/Users/dennislaw/Documents/supplychain-project/contracts/DiaChain");
+const DiaChain = artifacts.require("DiaChain");
 
 contract('DiaChain', (accounts) => {
 
@@ -41,16 +41,16 @@ contract('DiaChain', (accounts) => {
 
     };
     this.defaultDiamondBatches = {
-      0: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
-      1: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
-      2: {brand: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerB.id},
-      3: {brand: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
-      4: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerB.id},
-      5: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
-      6: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
-      7: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerB.id},
-      8: {brand: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
-      9: {brand: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerA.id},
+      0: {mining_location: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
+      1: {mining_location: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
+      2: {mining_location: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerB.id},
+      3: {mining_location: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
+      4: {mining_location: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerB.id},
+      5: {mining_location: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
+      6: {mining_location: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
+      7: {mining_location: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerB.id},
+      8: {mining_location: this.MINING_LOCATION.Namibia, manufacturer: this.defaultEntities.manufacturerB.id},
+      9: {mining_location: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerA.id},
     };
 
     this.diaChainInstance = await DiaChain.deployed();
@@ -77,9 +77,9 @@ contract('DiaChain', (accounts) => {
   });
   it('should add diamond batched successfully', async () => {
     for(let i=0; i< Object.keys(this.defaultDiamondBatches).length; i++){
-      const {brand, manufacturer} = this.defaultDiamondBatches[i];
+      const {mining_location, manufacturer} = this.defaultDiamondBatches[i];
       const result = await this.diaChainInstance.addDiamondBatch(
-        brand, manufacturer,
+        mining_location, manufacturer,
         {from: this.owner}
       );
       // console.log(result);
@@ -90,7 +90,7 @@ contract('DiaChain', (accounts) => {
       });
       const retrievedDiamondBatch = await this.diaChainInstance.diamondBatches.call(i);
       assert.equal(i, retrievedDiamondBatch.id);
-      assert.equal(brand, retrievedDiamondBatch.brand);
+      assert.equal(mining_location, retrievedDiamondBatch.mining_location);
       assert.equal(manufacturer, retrievedDiamondBatch.manufacturer);
       assert.equal(undefined, retrievedDiamondBatch.certificateIds);
      
@@ -104,7 +104,7 @@ contract('DiaChain', (accounts) => {
         mnemonic,
         providerOrUrl
       });
-      console.log("Provider URL:", providerOrUrl);
+      // console.log("Provider URL:", providerOrUrl);
       this.web3 = new Web3(provider);      
 
       const {inspector, manufacturerA} = this.defaultEntities;
@@ -129,5 +129,28 @@ contract('DiaChain', (accounts) => {
         prover: manufacturerA.id,
         certificateId: new BN(0)
       });
+      const retrievedCertificate = await this.diaChainInstance.certificates.call(0);
+      assert.equal(retrievedCertificate.id, 0);
+      assert.equal(retrievedCertificate.issuer["id"], inspector.id);
+      assert.equal(retrievedCertificate.prover["id"], manufacturerA.id);
+      assert.equal(retrievedCertificate.signature, signature);
+      assert.equal(retrievedCertificate.status, this.StatusEnums.mined.pos.toString());
   });
+  it('should verify that the certificate signature matches the issuer', async () => {
+    const {inspector, manufacturerA} = this.defaultEntities;
+    const diamondBatchId = 0;
+    // const message = `Inspector (${inspector.id}) certifies vaccine batch #${vaccineBatchId} for Manufacturer (${manufacturerA.id}).`;
+    const message = `Inspector (${inspector.id}) certifies diamond batch #${diamondBatchId} for Manufacturer (${manufacturerA.id}).`;
+
+    const certificate = await this.diaChainInstance.certificates.call(0); 
+    const signerMatches = await this.diaChainInstance.isMatchingSignature(
+      this.web3.utils.keccak256(message),
+      certificate.id,
+      inspector.id,
+      {from: this.owner}
+    );
+
+    assert.equal(signerMatches, true);
+   
+});
 });

@@ -21,10 +21,10 @@ library CryptoSuite {
 
     function recoverSigner(bytes32 message, bytes memory sig) internal pure returns (address) {
         (uint8 v, bytes32 r, bytes32 s) = splitsSignature(sig);
-        // bytes memory prefix = "\x19Ethereum Signed \n32";
-        // bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, message));
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, message));
 
-        return ecrecover(message, v, r, s);
+        return ecrecover(prefixedHash, v, r, s);
     }
 }
 
@@ -57,14 +57,14 @@ contract DiaChain {
     uint public constant MAX_CERTIFICATIONS = 2;
 
     uint[] public certificateIds;
-    uint[] public DiamondBatchIds;
+    uint[] public diamondBatchIds;
 
-    mapping(uint => DiamondBatch) public DiamondBatches;
+    mapping(uint => DiamondBatch) public diamondBatches;
     mapping(uint => Certificate) public certificates;
     mapping(address => Entity) public entities;
 
     event AddEntity(address entityId, string entityMode);
-    event AddDiamondBatch(uint DiamondBatchId, address indexed manufacturer);
+    event AddDiamondBatch(uint diamondBatchId, address indexed manufacturer);
     event IssueCertificate(address indexed issuer, address indexed prover, uint certificateId);
 
     function addEntity(address _id, string memory _mode) public {
@@ -97,17 +97,17 @@ contract DiaChain {
 
     function addDiamondBatch(string memory mining_location, address manufacturer) public returns(uint) {
         uint[] memory _certificateIds = new uint[](MAX_CERTIFICATIONS);
-        uint id = DiamondBatchIds.length;
+        uint id = diamondBatchIds.length;
         DiamondBatch memory batch = DiamondBatch(id, mining_location, manufacturer, _certificateIds);
         
-        DiamondBatches[id] = batch;
-        DiamondBatchIds.push(id);
+        diamondBatches[id] = batch;
+        diamondBatchIds.push(id);
 
         emit AddDiamondBatch(batch.id, batch.manufacturer);
         return id;
     }
 
-    function issueCertificate(address _issuer, address _prover, string memory _status, uint DiamondBatchId, bytes memory signature) public returns(uint) {
+    function issueCertificate(address _issuer, address _prover, string memory _status, uint diamondBatchId, bytes memory signature) public returns(uint) {
         Entity memory issuer = entities[_issuer];
         require(issuer.mode == Mode.ISSUER);
 
@@ -152,7 +152,7 @@ contract DiaChain {
             return Status.JEWELLER;
         }
 
-        revert("received invalid entity status");
+        revert("received invalid certification status");
     }
 
     function isMatchingSignature(bytes32 message, uint id, address issuer) public view returns (bool) {
