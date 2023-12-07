@@ -40,7 +40,7 @@ contract('DiaChain', (accounts) => {
       borderAgent: {id: accounts[8], mode: this.ModeEnums.VERIFIER.val}
 
     };
-    this.defaultVaccineBatches = {
+    this.defaultDiamondBatches = {
       0: {brand: this.MINING_LOCATION.South_Africa, manufacturer: this.defaultEntities.manufacturerA.id},
       1: {brand: this.MINING_LOCATION.Australia, manufacturer: this.defaultEntities.manufacturerA.id},
       2: {brand: this.MINING_LOCATION.Congo, manufacturer: this.defaultEntities.manufacturerB.id},
@@ -75,24 +75,24 @@ contract('DiaChain', (accounts) => {
 
     }
   });
-  it('should add vaccine batched successfully', async () => {
-    for(let i=0; i< Object.keys(this.defaultVaccineBatches).length; i++){
-      const {brand, manufacturer} = this.defaultVaccineBatches[i];
-      const result = await this.diaChainInstance.addVaccineBatch(
+  it('should add diamond batched successfully', async () => {
+    for(let i=0; i< Object.keys(this.defaultDiamondBatches).length; i++){
+      const {brand, manufacturer} = this.defaultDiamondBatches[i];
+      const result = await this.diaChainInstance.addDiamondBatch(
         brand, manufacturer,
         {from: this.owner}
       );
       // console.log(result);
-      expectEvent(result.receipt, "AddVaccineBatch", {
-        vaccineBatchId: String(i),
+      expectEvent(result.receipt, "AddDiamondBatch", {
+        diamondBatchId: String(i),
         manufacturer: manufacturer
 
       });
-      const retrievedVaccineBatch = await this.diaChainInstance.vaccineBatches.call(i);
-      assert.equal(i, retrievedVaccineBatch.id);
-      assert.equal(brand, retrievedVaccineBatch.brand);
-      assert.equal(manufacturer, retrievedVaccineBatch.manufacturer);
-      assert.equal(undefined, retrievedVaccineBatch.certificateIds);
+      const retrievedDiamondBatch = await this.diaChainInstance.diamondBatches.call(i);
+      assert.equal(i, retrievedDiamondBatch.id);
+      assert.equal(brand, retrievedDiamondBatch.brand);
+      assert.equal(manufacturer, retrievedDiamondBatch.manufacturer);
+      assert.equal(undefined, retrievedDiamondBatch.certificateIds);
      
     }
   });
@@ -108,8 +108,8 @@ contract('DiaChain', (accounts) => {
       this.web3 = new Web3(provider);      
 
       const {inspector, manufacturerA} = this.defaultEntities;
-      const vaccineBatchId = 0;
-      const message = `Inspector (${inspector.id}) certifies vaccine batch #${vaccineBatchId} for Manufacturer (${manufacturerA.id}).`;
+      const diamondBatchId = 0;
+      const message = `Inspector (${inspector.id}) certifies diamond batch #${diamondBatchId} for Manufacturer (${manufacturerA.id}).`;
       const signature = await this.web3.eth.sign(
         this.web3.utils.keccak256(message),
         inspector.id
@@ -119,7 +119,7 @@ contract('DiaChain', (accounts) => {
         inspector.id,
         manufacturerA.id,
         this.StatusEnums.mined.val,
-        vaccineBatchId,
+        diamondBatchId,
         signature,
         {from: this.owner}
       );
