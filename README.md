@@ -78,7 +78,7 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 Tools and Technologies
 
 - Solidity (Ethereum Smart Contract Language)
-- Metamask (Ethereum wallet)
+- HDWalletProvider
 - Ropsten test network ( use ropsten faucet to get ethers on ropsten network )
 - Truffle
 - Infura
@@ -91,6 +91,8 @@ Prerequisites
 - Solidity v0.8.13
 - Ganache v7.9.1(npm install -g ganache-cli)
 - Web3.js v1.10.0
+- Openzeppelin/test-helpers v0.5.16
+- Truffle/hdwallet-provider v1.7.0
 
 Setting up Ethereum Smart Contract:
 ```
