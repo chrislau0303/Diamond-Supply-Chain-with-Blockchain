@@ -6,7 +6,7 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 
 # <a name="_2kis8k5qx05m"></a>2] Requirements Gathering
 ## <a name="_95hjnsqf89iu"></a>2.1] Diamond Supply Chain
-![](Aspose.Words.d60bbe55-9a7a-4b50-b6a9-5aebd57b90ca.001.png)
+![]()
 
 *Source:* 
 ## <a name="_s9yzdjfukr2"></a>2.2] System Actors
@@ -48,7 +48,7 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 1. Jeweler verifies certificates
 1. ***batch status updated to POLISHED\_TRADE***
 ## <a name="_n7wsp7frcbz1"></a>3.2] User Classifications
-![](Aspose.Words.d60bbe55-9a7a-4b50-b6a9-5aebd57b90ca.002.png)
+![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/User-Classification%20.png)
 ## <a name="_2t118p6sl17h"></a>3.3] Use Cases
 1. As an ***Issuer***, I can issue a signature representing a digital certificate for a supplier’s plant
 1. As a ***Prover***, I can present a certificate/signature issued to me
@@ -67,9 +67,9 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 
 ## <a name="_ij7e6kns825"></a>3.4] High-level Diagram
 ### <a name="_vbgkwh4hdqoq"></a>3.4.1] 3-Tiered Architecture
-![](Aspose.Words.d60bbe55-9a7a-4b50-b6a9-5aebd57b90ca.003.png)
+![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/3-Tiered%20Architecture.png)
 ### <a name="_wfhxvu5hls6y"></a>3.4.2] 2-Tiered “dApp” Architecture
-![](Aspose.Words.d60bbe55-9a7a-4b50-b6a9-5aebd57b90ca.004.png)
+![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/2-Tiered%20%22dApp%22%20Architecture.png)
 
 
 
