@@ -6,7 +6,7 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 
 ## 2 Requirements Gathering
 ### 2.1 Diamond Supply Chain
-![]()
+![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/Diamond-Supply-Chain.png)
 
 ### 2.2 System Actors
 1. **Supplier**
