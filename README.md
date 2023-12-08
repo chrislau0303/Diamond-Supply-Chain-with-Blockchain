@@ -4,11 +4,11 @@ This project showcases the journey of Diamond on blockchain.
 
 The diamond supply chain is the sequence of activities and processes to bring raw diamonds from supplier(mines) to polished diamonds in jewelry stores .
 
-# <a name="_2kis8k5qx05m"></a>2] Requirements Gathering
-## <a name="_95hjnsqf89iu"></a>2.1] Diamond Supply Chain
+# <a name="_2kis8k5qx05m"></a>2 Requirements Gathering
+## <a name="_95hjnsqf89iu"></a>2.1 Diamond Supply Chain
 ![]()
 
-## <a name="_s9yzdjfukr2"></a>2.2] System Actors
+## <a name="_s9yzdjfukr2"></a>2.2 System Actors
 1. **Supplier**
    1. supply raw diamonds
 1. **Distributor**
@@ -20,7 +20,7 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 1. **Jewelry Retailer**
    1. sells the diamond product
 
-## <a name="_szsa62uhtyko"></a>2.4] Why Blockchain?
+## <a name="_szsa62uhtyko"></a>2.4 Why Blockchain?
 1. **Tamper-Proof Provenance**
    1. does the label on the diamond’s accurately represent its contents?
    1. did the diamond come from an inspected batch?
@@ -30,8 +30,8 @@ The diamond supply chain is the sequence of activities and processes to bring ra
    1. the data can’t be lost even if a customer “misplaces” their device
    1. the data can’t be lost even if the product are damaged
 # <a name="_47i8ei5qmtyl"></a>
-# <a name="_efg3v19t08au"></a>3] System Design
-## <a name="_s258j3ox3vz2"></a>3.1] Flow
+# <a name="_efg3v19t08au"></a>3 System Design
+## <a name="_s258j3ox3vz2"></a>3.1 Flow
 1. Inspector issues certificate for batch to supplier
 1. ***batch status updated to SUPPLIED***
 1. Supplier presents certificate to Distributor
@@ -46,16 +46,16 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 1. Distributor presents updated certificate to Jeweler
 1. Jeweler verifies certificates
 1. ***batch status updated to POLISHED\_TRADE***
-## <a name="_n7wsp7frcbz1"></a>3.2] User Classifications
+## <a name="_n7wsp7frcbz1"></a>3.2 User Classifications
 ![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/User-Classification%20.png)
-## <a name="_2t118p6sl17h"></a>3.3] Use Cases
+## <a name="_2t118p6sl17h"></a>3.3 Use Cases
 1. As an ***Issuer***, I can issue a signature representing a digital certificate for a supplier’s plant
 1. As a ***Prover***, I can present a certificate/signature issued to me
 1. As a ***Verifier***, I can validate the signature on the blockchain
-## <a name="_ij7e6kns825"></a>3.4] High-level Diagram
-### <a name="_vbgkwh4hdqoq"></a>3.4.1] 3-Tiered Architecture
+## <a name="_ij7e6kns825"></a>3.4 High-level Diagram
+### <a name="_vbgkwh4hdqoq"></a>3.4.1 3-Tiered Architecture
 ![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/3-Tiered%20Architecture.png)
-### <a name="_wfhxvu5hls6y"></a>3.4.2] 2-Tiered “dApp” Architecture
+### <a name="_wfhxvu5hls6y"></a>3.4.2 2-Tiered “dApp” Architecture
 ![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/2-Tiered%20%22dApp%22%20Architecture.png)
 
 
