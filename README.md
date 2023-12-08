@@ -8,7 +8,6 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 ## <a name="_95hjnsqf89iu"></a>2.1] Diamond Supply Chain
 ![]()
 
-*Source:* 
 ## <a name="_s9yzdjfukr2"></a>2.2] System Actors
 1. **Supplier**
    1. supply raw diamonds
@@ -81,7 +80,6 @@ Prerequisites
 
 Setting up Ethereum Smart Contract:
 ```
-
 git clone https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain.git
 
 cd Diamond-Supply-Chain-with-Blockchain
