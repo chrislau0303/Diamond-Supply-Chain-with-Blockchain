@@ -40,13 +40,13 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 1. ***batch status updated to ROUGH\_EXPORT***
 1. Distributor presents updated certificate to Polisher
 1. Polisher verifies each batch certificate
-1. ***<batch status updated to ROUGH\_TRADE>***
+1. ***batch status updated to ROUGH\_TRADE***
 1. Polisher presents certificates to Distributor
 1. Distributor verifies each certificate
-1. ***<batch status updated to POLISHED\_EXPORT>***
+1. ***batch status updated to POLISHED\_EXPORT***
 1. Distributor presents updated certificate to Jeweler
 1. Jeweler verifies certificates
-1. ***<batch status updated to POLISHED\_TRADE >***
+1. ***batch status updated to POLISHED\_TRADE***
 ## <a name="_n7wsp7frcbz1"></a>3.2] User Classifications
 ![](Aspose.Words.d60bbe55-9a7a-4b50-b6a9-5aebd57b90ca.002.png)
 ## <a name="_2t118p6sl17h"></a>3.3] Use Cases
