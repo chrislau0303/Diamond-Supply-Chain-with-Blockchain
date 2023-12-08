@@ -6,7 +6,7 @@
     "test": "test"
   },
   "scripts": {
-    "ganache": "ganache-cli -m \"kiss display south atom basket tiger ethics trial expect hub clarify barrel\"",
+    "ganache": "ganache-cli -m \"PRIVATE_KEY\"",
     "test": "truffle test"
   },
   "keywords": [],
