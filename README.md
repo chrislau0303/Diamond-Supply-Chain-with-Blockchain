@@ -34,10 +34,10 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 # <a name="_efg3v19t08au"></a>3] System Design
 ## <a name="_s258j3ox3vz2"></a>3.1] Flow
 1. Inspector issues certificate for batch to supplier
-1. ***<batch status updated to \SUPPLIED>***
+1. ***batch status updated to SUPPLIED***
 1. Supplier presents certificate to Distributor
 1. Distributor verifies each certificate
-1. ***<batch status updated to ROUGH\_EXPORT>***
+1. ***batch status updated to ROUGH\_EXPORT***
 1. Distributor presents updated certificate to Polisher
 1. Polisher verifies each batch certificate
 1. ***<batch status updated to ROUGH\_TRADE>***
