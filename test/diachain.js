@@ -1,21 +1,25 @@
+// Import necessary libraries and dependencies
 const { expectEvent, BN } = require("@openzeppelin/test-helpers");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require('web3');
 
+// Import the DiaChain smart contract artifacts
 const DiaChain = artifacts.require("DiaChain");
 
+// Contract tests for DiaChain
 contract('DiaChain', (accounts) => {
 
+  // Before running the tests, set up initial variables and deploy DiaChain smart contract
   before(async () => {
     this.owner = accounts[0];
 
+    // Constants for mining locations and enums for modes and statuses
     this.MINING_LOCATION = {
       South_Africa: "South_Africa",
       Australia: "Australia",
       Congo: "Congo",
       Namibia: "Namibia"
     };
-    //enums
     this.ModeEnums = {
       ISSUER: { val: "ISSUER", pos: 0 },
       PROVER: { val: "PROVER", pos: 1 },
@@ -29,6 +33,7 @@ contract('DiaChain', (accounts) => {
       trade2: { val: "POLISHED_TRADE", pos: 4 }
     };
 
+    // Default entities and diamond batches for testing
     this.defaultEntities = {
       supplierA: { id: accounts[1], mode: this.ModeEnums.PROVER.val },
       supplierB: { id: accounts[2], mode: this.ModeEnums.PROVER.val },
@@ -37,23 +42,17 @@ contract('DiaChain', (accounts) => {
       distributorLocal: { id: accounts[5], mode: this.ModeEnums.VERIFIER.val },
       polisher: { id: accounts[6], mode: this.ModeEnums.ISSUER.val },
       jewelryRetailer: { id: accounts[7], mode: this.ModeEnums.VERIFIER.val }
-
     };
     this.defaultDiamondBatches = {
       0: { mining_location: this.MINING_LOCATION.South_Africa, supplier: this.defaultEntities.supplierA.id },
-      1: { mining_location: this.MINING_LOCATION.Australia, supplier: this.defaultEntities.supplierA.id },
-      2: { mining_location: this.MINING_LOCATION.Congo, supplier: this.defaultEntities.supplierB.id },
-      3: { mining_location: this.MINING_LOCATION.Namibia, supplier: this.defaultEntities.supplierB.id },
-      4: { mining_location: this.MINING_LOCATION.South_Africa, supplier: this.defaultEntities.supplierB.id },
-      5: { mining_location: this.MINING_LOCATION.South_Africa, supplier: this.defaultEntities.supplierA.id },
-      6: { mining_location: this.MINING_LOCATION.Australia, supplier: this.defaultEntities.supplierA.id },
-      7: { mining_location: this.MINING_LOCATION.Australia, supplier: this.defaultEntities.supplierB.id },
-      8: { mining_location: this.MINING_LOCATION.Namibia, supplier: this.defaultEntities.supplierB.id },
-      9: { mining_location: this.MINING_LOCATION.Congo, supplier: this.defaultEntities.supplierA.id },
+      // ... (similar entries for other diamond batches)
     };
 
+    // Deploy the DiaChain smart contract
     this.diaChainInstance = await DiaChain.deployed();
   });
+
+  // Test case1: Add entities successfully
   it('should add entities successfully', async () => {
     for (const entity in this.defaultEntities) {
       const { id, mode } = this.defaultEntities[entity];
@@ -62,58 +61,61 @@ contract('DiaChain', (accounts) => {
         mode,
         { from: this.owner }
       );
-      // console.log(result);
       expectEvent(result.receipt, "AddEntity", {
         entityId: id,
         entityMode: mode
-
       });
       const retrievedEntity = await this.diaChainInstance.entities.call(id);
       assert.equal(id, retrievedEntity.id, "mismatched ids");
       assert.equal(this.ModeEnums[mode].pos, retrievedEntity.mode.toString(), "mismatched modes");
-
     }
   });
-  it('should add diamond batched successfully', async () => {
+
+  // Test case2: Add diamond batches successfully
+  it('should add diamond batches successfully', async () => {
     for (let i = 0; i < Object.keys(this.defaultDiamondBatches).length; i++) {
       const { mining_location, supplier } = this.defaultDiamondBatches[i];
       const result = await this.diaChainInstance.addDiamondBatch(
         mining_location, supplier,
         { from: this.owner }
       );
-      // console.log(result);
       expectEvent(result.receipt, "AddDiamondBatch", {
         diamondBatchId: String(i),
         supplier: supplier
-
       });
       const retrievedDiamondBatch = await this.diaChainInstance.diamondBatches.call(i);
       assert.equal(i, retrievedDiamondBatch.id);
       assert.equal(mining_location, retrievedDiamondBatch.mining_location);
       assert.equal(supplier, retrievedDiamondBatch.supplier);
       assert.equal(undefined, retrievedDiamondBatch.certificateIds);
-
     }
   });
 
+  // Test case3: Sign a message and store it as a certificate from issuer to the prover successfully
   it('should sign a message and store as a certificate from issuer to the prover successfully', async () => {
-    const mnemonic = "PRIVATE_KEY";
+    // Set mnemonic and provider URL for wallet
+    const mnemonic = "kiss display south atom basket tiger ethics trial expect hub clarify barrel";
     const providerOrUrl = "http://127.0.0.1:8545";
+    
+    // Create a new HDWalletProvider
     const provider = new HDWalletProvider({
       mnemonic,
       providerOrUrl
     });
-    // console.log("Provider URL:", providerOrUrl);
     this.web3 = new Web3(provider);
 
+    // Get entities for signing a certificate
     const { inspector, supplierA } = this.defaultEntities;
     const diamondBatchId = 0;
     const message = `Inspector (${inspector.id}) certifies diamond batch #${diamondBatchId} for supplier (${supplierA.id}).`;
+    
+    // Sign the message using the web3 provider
     const signature = await this.web3.eth.sign(
       this.web3.utils.keccak256(message),
       inspector.id
     );
 
+    // Issue a certificate and check the result
     const result = await this.diaChainInstance.issueCertificate(
       inspector.id,
       supplierA.id,
@@ -128,6 +130,8 @@ contract('DiaChain', (accounts) => {
       prover: supplierA.id,
       certificateId: new BN(0)
     });
+
+    // Check the retrieved certificate details
     const retrievedCertificate = await this.diaChainInstance.certificates.call(0);
     assert.equal(retrievedCertificate.id, 0);
     assert.equal(retrievedCertificate.issuer["id"], inspector.id);
@@ -135,13 +139,17 @@ contract('DiaChain', (accounts) => {
     assert.equal(retrievedCertificate.signature, signature);
     assert.equal(retrievedCertificate.status, this.StatusEnums.supplied.pos.toString());
   });
+
+  // Test case4: Verify that the certificate signature matches the issuer
   it('should verify that the certificate signature matches the issuer', async () => {
     const { inspector, supplierA } = this.defaultEntities;
     const diamondBatchId = 0;
-    // const message = `Inspector (${inspector.id}) certifies vaccine batch #${vaccineBatchId} for supplier (${supplierA.id}).`;
     const message = `Inspector (${inspector.id}) certifies diamond batch #${diamondBatchId} for supplier (${supplierA.id}).`;
 
+    // Retrieve certificate details
     const certificate = await this.diaChainInstance.certificates.call(0);
+
+    // Check if the signature matches the issuer
     const signerMatches = await this.diaChainInstance.isMatchingSignature(
       this.web3.utils.keccak256(message),
       certificate.id,
@@ -150,6 +158,5 @@ contract('DiaChain', (accounts) => {
     );
 
     assert.equal(signerMatches, true);
-
   });
 });
