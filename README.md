@@ -93,92 +93,100 @@ Prerequisites
 - Web3.js v1.10.0
 
 Setting up Ethereum Smart Contract:
+```
 
 git clone https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain.git
 
 cd Diamond-Supply-Chain-with-Blockchain
+```
 
 Run the following command:
-
+```
 rm -rf build
 
 truffle compile
+```
 
 Open another terminal and run the following command:
+```
 
 ganache-cli -m "your private key"
-
+```
 
 Back to the original terminal and run:
 
+```
 truffle migrate
+```
 
 After successfully deployment you will get response in bash terminal like below
-
+```
 Compiling your contracts...
 
-\===========================
+===========================
 
-\> Everything is up to date, there is nothing to compile.
+> Everything is up to date, there is nothing to compile.
 
 Starting migrations...
 
-\======================
+======================
 
-\> Network name:    'development'
+> Network name:    'development'
 
-\> Network id:      1702033139965
+> Network id:      1702033139965
 
-\> Block gas limit: 6721975 (0x6691b7)
+> Block gas limit: 6721975 (0x6691b7)
 
 1\_deploy\_contracts.js
 
-\=====================
+=====================
 
-`   `Deploying 'DiaChain'
+Deploying 'DiaChain'
 
-`   `--------------------
+--------------------
 
-`   `> transaction hash:    0xb890b585de7eda75a845de9fd26f40cb8b121d2d794d4d5b6f425b9b7468692d
+> transaction hash:    0xb890b585de7eda75a845de9fd26f40cb8b121d2d794d4d5b6f425b9b7468692d
 
-`   `> Blocks: 0            Seconds: 0
+> Blocks: 0            Seconds: 0
 
-`   `> contract address:    0xA9CBc0E8c7A57eDb7A9d2A64f9c0805f1006b42a
+> contract address:    0xA9CBc0E8c7A57eDb7A9d2A64f9c0805f1006b42a
 
-`   `> block number:        1
+> block number:        1
 
-`   `> block timestamp:     1702033240
+> block timestamp:     1702033240
 
-`   `> account:             0x2b781Bf67572222F867b58f0F084CF629fd3e6A8
+> account:             0x2b781Bf67572222F867b58f0F084CF629fd3e6A8
 
-`   `> balance:             99.95497346
+> balance:             99.95497346
 
-`   `> gas used:            2251327 (0x225a3f)
+> gas used:            2251327 (0x225a3f)
 
-`   `> gas price:           20 gwei
+> gas price:           20 gwei
 
-`   `> value sent:          0 ETH
+> value sent:          0 ETH
 
-`   `> total cost:          0.04502654 ETH
+> total cost:          0.04502654 ETH
 
-`   `> Saving artifacts
+> Saving artifacts
 
-`   `-------------------------------------
+-------------------------------------
 
-`   `> Total cost:          0.04502654 ETH
+> Total cost:          0.04502654 ETH
 
 Summary
 
-\=======
+=======
 
-\> Total deployments:   1
+> Total deployments:   1
 
-\> Final cost:          0.04502654 ETH
-
+> Final cost:          0.04502654 ETH
+```
 You can test by running the following commands:
+```
 
 npm install
 truffle test
+```
 
 Remark:
 
