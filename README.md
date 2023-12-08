@@ -53,26 +53,11 @@ The diamond supply chain is the sequence of activities and processes to bring ra
 1. As an ***Issuer***, I can issue a signature representing a digital certificate for a supplier’s plant
 1. As a ***Prover***, I can present a certificate/signature issued to me
 1. As a ***Verifier***, I can validate the signature on the blockchain
-### <a name="_m24yuqi110fv"></a>3.3.1] Out of Scope
-- Payments between system agents;
-- Dishonest doctors/immunizers;
-- Suppliers of raw materials to the miners;
-- Image capture & QR code scanning;
-- Scalability;
-- Distribution to areas without internet access;
-- IoT;
-- Machine learning;
-- Regulatory compliance (e.g. GDPR, HIPAA, etc.); and
-- Anything not addressed in this video.
-
 ## <a name="_ij7e6kns825"></a>3.4] High-level Diagram
 ### <a name="_vbgkwh4hdqoq"></a>3.4.1] 3-Tiered Architecture
 ![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/3-Tiered%20Architecture.png)
 ### <a name="_wfhxvu5hls6y"></a>3.4.2] 2-Tiered “dApp” Architecture
 ![](https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain/blob/main/assets/2-Tiered%20%22dApp%22%20Architecture.png)
-
-
-
 
 
 Tools and Technologies
