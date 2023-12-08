@@ -1,4 +1,4 @@
-<a name="_j1dzk59pydum"></a>Blockchain Supply Chain: Diamond
+#Blockchain Supply Chain: Diamond
 # <a name="_uglnqryuygy1"></a>1 Goal
 This project showcases the journey of Diamond on blockchain.
 
