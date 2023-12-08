@@ -97,7 +97,7 @@ contract('DiaChain', (accounts) => {
   });
 
   it('should sign a message and store as a certificate from issuer to the prover successfully', async () => {
-    const mnemonic = "kiss display south atom basket tiger ethics trial expect hub clarify barrel";
+    const mnemonic = "PRIVATE_KEY";
     const providerOrUrl = "http://127.0.0.1:8545";
     const provider = new HDWalletProvider({
       mnemonic,
