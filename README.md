@@ -1,5 +1,5 @@
 <a name="_j1dzk59pydum"></a>Blockchain Supply Chain: Diamond
-# <a name="_uglnqryuygy1"></a>1] Goal
+# <a name="_uglnqryuygy1"></a>1 Goal
 This project showcases the journey of Diamond on blockchain.
 
 The diamond supply chain is the sequence of activities and processes to bring raw diamonds from supplier(mines) to polished diamonds in jewelry stores .
