@@ -99,7 +99,6 @@ git clone https://github.com/chrislau0303/Diamond-Supply-Chain-with-Blockchain.g
 
 cd Diamond-Supply-Chain-with-Blockchain
 ```
-
 Run the following command:
 ```
 rm -rf build
@@ -109,7 +108,6 @@ truffle compile
 
 Open another terminal and run the following command:
 ```
-
 ganache-cli -m "your private key"
 ```
 
@@ -183,7 +181,6 @@ Summary
 ```
 You can test by running the following commands:
 ```
-
 npm install
 truffle test
 ```
