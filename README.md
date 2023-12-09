@@ -141,5 +141,5 @@ truffle test
 
 Remark:
 
-Remember to change the mnemonic in diachain.js on line 100 to your own private key
+Remember to change the mnemonic in diachain.js on line 97 to your own private key
 

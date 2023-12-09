@@ -94,7 +94,7 @@ contract('DiaChain', (accounts) => {
   // Test case3: Sign a message and store it as a certificate from issuer to the prover successfully
   it('should sign a message and store as a certificate from issuer to the prover successfully', async () => {
     // Set mnemonic and provider URL for wallet
-    const mnemonic = "kiss display south atom basket tiger ethics trial expect hub clarify barrel";
+    const mnemonic = "YOUR_PRIVATE_KEY";
     const providerOrUrl = "http://127.0.0.1:8545";
     
     // Create a new HDWalletProvider
